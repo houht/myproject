@@ -1,0 +1,17 @@
+1 环境需求
+A：系统：centos64位 6.4/6.5
+
+
+2 安装
+A：上传FastDFS_v5.01_nginx_1.5.6-noinstall.tar.gz到系统任一目录并解压:tar zxvf FastDFS_v5.01_nginx_1.5.6-noinstall.tar.gz
+B：进入解压目录执行：sh install.sh。
+
+C：按照提示进行安装，分为tracker安装，storage安装，以及all in one安装模式。
+
+D：服务重启，统一命令：service fdfsd stop
+
+3 测试，在tracker 机器上执行
+A：fdfs_test /etc/fdfs/client.conf  upload  文件
+默认端口信息
+消息端口:22122;
+Web下载端口:80;

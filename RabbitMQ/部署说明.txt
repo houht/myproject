@@ -1,0 +1,20 @@
+1 环境需求
+A：系统：centos64位 6.4/6.5
+
+
+2 安装
+A：kill掉进程qpidd(没有此进程，可以忽略这一步) 命令:ps auxf | grep qpidd，然后执行chkconfig qpidd off(重启机器后使此进程仍然关闭)
+B：解压：tar zxvf erlang_R15B01_rabbitmq-server-generic-unix-3.3.0_64_noinstall.tar.gz
+C：sh install.sh
+
+
+3 配置(添加账号等信息)
+A：cd /usr/local/rabbitmq_server-3.3.0/sbin (如果提示“./rabbitmqctl: line 29: exec: erl: not found”，因为环境变量还没有生效，需要重新登陆系统即可)
+B：添加用户：./rabbitmqctl add_user paas paas_4R5T3E(注：如果提示erl: not found，需要重新登陆到系统)
+C：添加vhost：./rabbitmqctl add_vhost paas_vhost
+D：添加权限(将添加的用户和添加的vhost绑定起来，如果修改了名称，这里也要修改)：./rabbitmqctl set_permissions -p "paas_vhost"  paas  ".*" ".*" ".*"
+E：设置用户管理员角色(名称也要一致)，根据需要设定：./rabbitmqctl set_user_tags  paas  administrator
+F: 执行netstat -anpt命令，查看5672端口是否存在,存在则表明安装成功;
+G: 如果要使用HTTP API管理功能，需要如下操作：
+   1 在/usr/local/rabbitmq_server-3.3.0/sbin目录执行：./rabbitmq-plugins enable rabbitmq_management
+   2 重启，关闭：service rabbitd  stop ； 启动：service rabbitd  start
